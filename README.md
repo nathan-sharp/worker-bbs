@@ -14,7 +14,8 @@ WorkerBBS is a modern, lightweight, serverless imageboard and bulletin board sys
 - **Live Auto-Polling**: Toggleable auto-update feature in thread views to fetch new replies without reloading the page.
 - **Floating Quick Reply**: Draggable modal box for instant replying from anywhere on the page.
 - **File & URL Attachments**: Upload images/videos directly to R2 object storage or attach direct third-party URLs (e.g. Catbox, Imgur).
-- **Admin Moderation Dashboard**: Admin authentication supporting Sticky/Lock threads, Post deletion, Board creation, and IP hash banning with public `(USER WAS BANNED FOR THIS POST)` notices.
+- **Automated Post Retention & Pruning Policy**: Configure global site-wide expiration thresholds (6 hours up to 30 days, or Never Delete). Expired posts and non-sticky threads are automatically swept and pruned via Cloudflare Worker Cron Triggers (`0 * * * *`) or via the manual dashboard prune button.
+- **Admin Moderation Dashboard**: Admin authentication supporting Sticky/Lock threads, Post deletion, Board creation, Post retention configuration, and IP hash banning with public `(USER WAS BANNED FOR THIS POST)` notices.
 - **Auto-Setup Out of the Box**: Automatically initializes D1 tables and seeds 4 default boards (`/tech/`, `/meta/`, `/rnd/`, `/art/`) with welcome threads on first launch!
 
 ---
@@ -43,6 +44,41 @@ npm run dev
 
 ## ☁️ Self-Hosting & Production Deployment
 
+You can deploy WorkerBBS using either the **Cloudflare Web Dashboard (Git Integration)** or the **Command-Line Wrangler CLI**.
+
+### Option A: Cloudflare Web Dashboard Setup (Zero Git Commits / Secret Safe!)
+
+If you have forked this repository on GitHub, you can deploy WorkerBBS directly through the Cloudflare web dashboard **without editing code or committing any secrets or database IDs to Git**:
+
+1. **Create Your Database & Storage in Cloudflare Dashboard**:
+   - Log into the [Cloudflare Dashboard](https://dash.cloudflare.com/) and navigate to **Workers & Pages**.
+   - Go to **D1 SQL Database** ➔ Click **Create database** ➔ Name it `worker_bbs_db` ➔ Click **Create**.
+   - Go to **R2 Object Storage** ➔ Click **Create bucket** ➔ Name it `worker-bbs-media` ➔ Click **Create bucket**.
+
+2. **Connect to Workers Git Integration**:
+   - Under **Workers & Pages**, click **Create application** ➔ select the **Workers** tab (or **Connect to Git**).
+   - Select your GitHub account and choose your forked `worker-bbs` repository.
+   - Set the **Build command** to `npm run build` and click **Save and Deploy**.
+
+3. **Configure Bindings & Secrets in Dashboard (No Git Edits Needed!)**:
+   - Once deployed, open your new Worker in the dashboard and go to **Settings ➔ Variables and Secrets**:
+     - Click **Add variable** ➔ Set **Variable name** to `ADMIN_KEY`, set **Value** to your strong secret passphrase, and click **Encrypt** (Save as Secret).
+     - *(Optional)* Add a variable `SITE_TITLE` with your desired imageboard name.
+   - Next, go to **Settings ➔ Bindings**:
+     - Click **Add Binding** ➔ Select **D1 Database** ➔ Set Variable name to `BBS_DB` and select `worker_bbs_db` from the dropdown menu.
+     - Click **Add Binding** ➔ Select **R2 Bucket** ➔ Set Variable name to `BBS_BUCKET` and select `worker-bbs-media` from the dropdown menu.
+   - *Note*: Dashboard variables, secrets, and bindings automatically override the placeholder values in `wrangler.jsonc`, keeping your GitHub repository completely clean and secret-free!
+
+4. **Verify Cron Triggers**:
+   - Go to **Settings ➔ Triggers** and ensure the Cron Trigger `0 * * * *` is active for automated hourly post retention sweeps.
+
+5. **Visit Your Site!**
+   - Open your Worker's live `.workers.dev` URL. On your very first visit, WorkerBBS will automatically construct all database tables and seed default boards out of the box! 🎉
+
+---
+
+### Option B: Terminal & Wrangler CLI Setup (For Local Command-Line Users)
+
 ### 1. Create a Cloudflare D1 Database
 Create your production serverless database using Wrangler:
 ```bash
@@ -66,13 +102,7 @@ npx wrangler r2 bucket create worker-bbs-media
 ```
 *(Ensure the bucket name matches `bucket_name` in `wrangler.jsonc`)*
 
-### 3. Initialize Remote Production Database
-Run the D1 migration and seed scripts against your remote Cloudflare database:
-```bash
-npm run db:init:remote
-```
-
-### 4. Configure Admin Secret Key
+### 3. Configure Admin Secret Key
 In `wrangler.jsonc`, change the default `ADMIN_KEY` under `vars` to a strong secret passphrase:
 ```jsonc
 "vars": {
@@ -81,12 +111,12 @@ In `wrangler.jsonc`, change the default `ADMIN_KEY` under `vars` to a strong sec
 }
 ```
 
-### 5. Build & Deploy to Cloudflare Workers!
+### 4. Build & Deploy to Cloudflare Workers!
 Compile the client SPA to `./dist` and deploy the full-stack worker with static assets:
 ```bash
 npm run deploy
 ```
-Your imageboard is now live globally on the Cloudflare Edge! 🎉
+Your imageboard is now live globally on the Cloudflare Edge! (Tables and default boards initialize automatically on first visit). 🎉
 
 ---
 
@@ -95,8 +125,3 @@ Your imageboard is now live globally on the Cloudflare Edge! 🎉
 2. Enter your `ADMIN_KEY`.
 3. From the dashboard, you can view site analytics, create new custom boards, lift active bans, or log out.
 4. While logged as admin, viewing threads and posts will reveal moderation buttons (`[Delete]`, `[Ban IP]`, `[Sticky]`, `[Lock]`).
-
----
-
-## 📄 License
-MIT License - Free to modify, self-host, and distribute!
