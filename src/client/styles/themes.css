@@ -1,0 +1,47 @@
+/* Authentic Classic Themes */
+
+body.theme-yotsuba {
+  --bg-main: #fffee6;
+  --text-main: #800000;
+  --text-muted: #707070;
+  --link-color: #0000ee;
+  --link-hover: #dd0000;
+  --header-bg: #f0e0d6;
+  --banner-bg: #f0e0d6;
+  --banner-title: #800000;
+  --card-bg: #f0e0d6;
+  --border-color: #d9bfb7;
+  --input-bg: #ffffff;
+  --btn-bg: #800000;
+  --btn-text: #ffffff;
+  --btn-hover: #a00000;
+  --post-bg: #f0e0d6;
+  --post-border: #d9bfb7;
+  --greentext: #789922;
+  --tripcode: #117743;
+  --accent-bg: #800000;
+  --accent-text: #ffffff;
+}
+
+body.theme-yotsuba-b {
+  --bg-main: #1d1f21;
+  --text-main: #c5c8c6;
+  --text-muted: #81868a;
+  --link-color: #81a2be;
+  --link-hover: #8abeb7;
+  --header-bg: #282a2e;
+  --banner-bg: #282a2e;
+  --banner-title: #ffffff;
+  --card-bg: #282a2e;
+  --border-color: #373b41;
+  --input-bg: #1d1f21;
+  --btn-bg: #373b41;
+  --btn-text: #ffffff;
+  --btn-hover: #4d525a;
+  --post-bg: #282a2e;
+  --post-border: #373b41;
+  --greentext: #b5bd68;
+  --tripcode: #8abeb7;
+  --accent-bg: #81a2be;
+  --accent-text: #1d1f21;
+}

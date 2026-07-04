@@ -1,0 +1,31 @@
+{
+  "name": "worker-bbs",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker Bulletin Board System (BBS) Template like 4chan",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm:dev:worker\" \"npm:dev:client\"",
+    "dev:worker": "wrangler dev",
+    "dev:client": "vite",
+    "build": "vite build",
+    "preview": "wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "db:init": "wrangler d1 execute BBS_DB --local --file=./schema.sql && wrangler d1 execute BBS_DB --local --file=./seed.sql",
+    "db:init:remote": "wrangler d1 execute BBS_DB --remote --file=./schema.sql && wrangler d1 execute BBS_DB --remote --file=./seed.sql"
+  },
+  "dependencies": {
+    "hono": "^4.6.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241218.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "wrangler": "^3.101.0"
+  }
+}

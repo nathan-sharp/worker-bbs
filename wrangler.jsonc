@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "worker-bbs",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-12-01",
+  "assets": {
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "BBS_DB",
+      "database_name": "worker_bbs_db",
+      "database_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BBS_BUCKET",
+      "bucket_name": "worker-bbs-media"
+    }
+  ],
+  "vars": {
+    "ADMIN_KEY": "admin123",
+    "SITE_TITLE": "WorkerBBS",
+    "RATE_LIMIT_SECONDS": "10"
+  },
+  "triggers": {
+    "crons": ["0 * * * *"]
+  }
+}

@@ -1,0 +1,165 @@
+/* Thread & Post Styling */
+.thread-container {
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+}
+
+.post-card {
+  background-color: var(--post-bg);
+  border: 1px solid var(--post-border);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 10px;
+  position: relative;
+  transition: background-color 0.15s ease;
+}
+
+.post-op {
+  border-width: 2px;
+  margin-bottom: 15px;
+}
+
+.post-reply {
+  display: inline-block;
+  min-width: 400px;
+  max-width: 100%;
+  margin-left: 24px;
+}
+
+.post-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.post-author {
+  font-weight: 700;
+  color: var(--tripcode);
+}
+
+.post-tripcode {
+  font-weight: 400;
+  color: var(--tripcode);
+}
+
+.post-date {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.post-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: var(--input-bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--border-color);
+}
+
+.post-num {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.post-num:hover {
+  text-decoration: underline;
+}
+
+.post-media {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.post-media-info {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.post-thumb {
+  max-width: 250px;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: zoom-in;
+  border: 1px solid var(--border-color);
+  transition: opacity 0.2s ease;
+}
+
+.post-thumb.expanded {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  cursor: zoom-out;
+}
+
+.post-body {
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 6px;
+}
+
+.greentext {
+  color: var(--greentext);
+}
+
+.quote-link {
+  color: var(--link-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Hover Preview Card */
+.quote-preview {
+  position: fixed;
+  z-index: 3000;
+  max-width: 450px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--link-color);
+  background: var(--card-bg);
+  pointer-events: none;
+  animation: fadeIn 0.1s ease;
+}
+
+/* Floating Quick Reply Box */
+.quick-reply-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 380px;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.2s ease;
+}
+
+.qr-header {
+  background-color: var(--header-bg);
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+  cursor: move;
+}
+
+.qr-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
