@@ -4,6 +4,7 @@
   "description": "Cloudflare Worker Bulletin Board System (BBS) Template like 4chan",
   "private": true,
   "scripts": {
+    "predev": "npm run build",
     "dev": "concurrently \"npm:dev:worker\" \"npm:dev:client\"",
     "dev:worker": "wrangler dev",
     "dev:client": "vite",

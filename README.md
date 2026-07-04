@@ -14,7 +14,7 @@ WorkerBBS is a modern, lightweight, serverless imageboard and bulletin board sys
 - **Live Auto-Polling**: Toggleable auto-update feature in thread views to fetch new replies without reloading the page.
 - **Floating Quick Reply**: Draggable modal box for instant replying from anywhere on the page.
 - **File & URL Attachments**: Upload images/videos directly to R2 object storage or attach direct third-party URLs (e.g. Catbox, Imgur).
-- **Automated Post Retention & Pruning Policy**: Configure global site-wide expiration thresholds (6 hours up to 30 days, or Never Delete). Expired posts and non-sticky threads are automatically swept and pruned via Cloudflare Worker Cron Triggers (`0 * * * *`) or via the manual dashboard prune button.
+- **Automated Post Retention & Pruning Policy**: Default 30-day retention threshold out of the box (configurable from 6 hours up to Never Delete). Expired posts and non-sticky threads are automatically swept and pruned via Cloudflare Worker Cron Triggers (`0 * * * *`) or via the manual dashboard prune button.
 - **Admin Moderation Dashboard**: Admin authentication supporting Sticky/Lock threads, Post deletion, Board creation, Post retention configuration, and IP hash banning with public `(USER WAS BANNED FOR THIS POST)` notices.
 - **Auto-Setup Out of the Box**: Automatically initializes D1 tables and seeds 4 default boards (`/tech/`, `/meta/`, `/rnd/`, `/art/`) with welcome threads on first launch!
 

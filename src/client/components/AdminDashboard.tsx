@@ -14,7 +14,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBoardCreated, 
   const [loading, setLoading] = useState(true);
 
   // Retention Policy State
-  const [globalHours, setGlobalHours] = useState(0);
+  const [globalHours, setGlobalHours] = useState(720);
   const [boardOverrides, setBoardOverrides] = useState<Record<string, number>>({});
   const [savingRetention, setSavingRetention] = useState(false);
   const [pruning, setPruning] = useState(false);
@@ -45,7 +45,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onBoardCreated, 
       const retRes = await fetch('/api/admin/retention', { headers });
       const retData = (await retRes.json()) as any;
       if (retData.success && retData.policy) {
-        setGlobalHours(retData.policy.global_hours || 0);
+        setGlobalHours(retData.policy.global_hours ?? 720);
         setBoardOverrides(retData.policy.board_overrides || {});
       }
     } catch {

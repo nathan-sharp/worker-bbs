@@ -25,13 +25,16 @@ export async function getRetentionPolicy(db: D1Database): Promise<RetentionPolic
   await ensureSettingsTable(db);
   const rows = await db.prepare("SELECT key, value FROM site_settings WHERE key LIKE 'retention_%'").all<{ key: string; value: string }>();
   
-  let global_hours = 0;
+  let global_hours = 720; // Default to 30 days (720 hours)
   const board_overrides: Record<string, number> = {};
 
   if (rows && rows.results) {
     for (const row of rows.results) {
       if (row.key === 'retention_global') {
-        global_hours = parseInt(row.value, 10) || 0;
+        const parsed = parseInt(row.value, 10);
+        if (!isNaN(parsed)) {
+          global_hours = parsed;
+        }
       } else if (row.key.startsWith('retention_board_')) {
         const boardId = row.key.replace('retention_board_', '');
         board_overrides[boardId] = parseInt(row.value, 10) || 0;
